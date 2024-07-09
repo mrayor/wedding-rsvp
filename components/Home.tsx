@@ -21,6 +21,7 @@ import {
 import { Pagination } from "@nextui-org/pagination";
 import { Chip, ChipProps } from "@nextui-org/chip";
 import { useDisclosure } from "@nextui-org/modal";
+import { useRouter } from "next/navigation";
 
 import { VerticalDotsIcon } from "../components/VerticalDotsIcon";
 import { ChevronDownIcon } from "../components/ChevronDownIcon";
@@ -44,6 +45,7 @@ type User = (typeof users)[0];
 export default function Home() {
   const [selected, setSelected] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
   const {
     isOpen: accessIsOpen,
     onOpen: accessOnOpen,
@@ -52,10 +54,10 @@ export default function Home() {
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
-    new Set([]),
+    new Set([])
   );
   const [visibleColumns] = React.useState<Selection>(
-    new Set(INITIAL_VISIBLE_COLUMNS),
+    new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -73,7 +75,7 @@ export default function Home() {
     if (visibleColumns === "all") return columns;
 
     return columns.filter((column) =>
-      Array.from(visibleColumns).includes(column.uid),
+      Array.from(visibleColumns).includes(column.uid)
     );
   }, [visibleColumns]);
 
@@ -82,7 +84,7 @@ export default function Home() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+        user.name.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     if (
@@ -90,7 +92,7 @@ export default function Home() {
       Array.from(statusFilter).length !== statusOptions.length
     ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+        Array.from(statusFilter).includes(user.status)
       );
     }
 
@@ -155,8 +157,9 @@ export default function Home() {
               <DropdownMenu>
                 <DropdownItem
                   onPress={() => {
-                    setSelected(user.id);
-                    accessOnOpen();
+                    // setSelected(user.id);
+                    // accessOnOpen();
+                    router.push(`/${user.id}`);
                   }}
                 >
                   View
@@ -193,7 +196,7 @@ export default function Home() {
       setRowsPerPage(Number(e.target.value));
       setPage(1);
     },
-    [],
+    []
   );
 
   const onSearchChange = React.useCallback((value?: string) => {
