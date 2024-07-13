@@ -67,7 +67,7 @@ export default function ViewAccessModal({ id, isOpen, onClose }: IProps) {
                   alt="logo"
                   className="py-2.5"
                   height={50}
-                  src="/next.svg"
+                  src="/logo.png"
                   width={80}
                 />
                 <div className="flex flex-col py-4">

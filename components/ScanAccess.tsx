@@ -2,13 +2,14 @@
 
 import { Button } from "@nextui-org/button";
 import React, { useState } from "react";
-import { parseCookies, setCookie } from "nookies";
+import { setCookie } from "nookies";
+import { useRouter } from "next/navigation";
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const ScanAccess = () => {
+const ScanAccess = ({ scanAccess }: { scanAccess: boolean }) => {
   const [loading, setLoading] = useState(false);
-  const cookies = parseCookies();
+  const router = useRouter();
 
   const handleClick = async () => {
     try {
@@ -18,6 +19,8 @@ const ScanAccess = () => {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",
       });
+      router.push("/");
+      router.refresh();
     } catch (error) {
       return error;
     } finally {
@@ -28,12 +31,12 @@ const ScanAccess = () => {
   return (
     <Button
       color="primary"
-      disabled={!!cookies["scan-access"]}
+      disabled={scanAccess}
       isLoading={loading}
       variant="shadow"
       onClick={handleClick}
     >
-      {cookies["scan-access"] ? "Access Granted" : "Grant Scan Access"}
+      {scanAccess ? "Access Granted" : "Grant Scan Access"}
     </Button>
   );
 };
