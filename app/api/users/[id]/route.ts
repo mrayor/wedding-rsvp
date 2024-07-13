@@ -22,9 +22,15 @@ export async function GET(
         { status: 404 },
       );
     }
-  } catch (error) {
+  } catch (error: any) {
     return Response.json(
-      { user: {}, message: "Unable to fetch user", success: false },
+      {
+        user: {},
+        message: "Unable to fetch user",
+        success: false,
+        error,
+        errrorRes: error.response,
+      },
       { status: 500 },
     );
   }
