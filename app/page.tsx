@@ -5,20 +5,7 @@ import { notFound } from "next/navigation";
 import Home from "../components/Home";
 
 import ScanAccess from "@/components/ScanAccess";
-
-export const getUsers = async () => {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users`, {
-      method: "GET",
-    });
-
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-
-    return error;
-  }
-};
+import { getUsers } from "@/components/utils";
 
 export default async function index() {
   const scanAccess = cookies().get("scan-access");
