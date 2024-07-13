@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { default: prisma } = require("@/lib/prisma");
 
 const USERS = [
   {
@@ -18,8 +18,6 @@ const USERS = [
     tableNumber: "28",
   },
 ];
-
-const prisma = new PrismaClient();
 
 const main = async () => {
   try {
