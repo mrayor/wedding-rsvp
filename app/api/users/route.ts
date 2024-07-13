@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function GET() {
   try {
@@ -13,5 +15,7 @@ export async function GET() {
       { users: [], message: "Unable to fetch users", success: false },
       { status: 500 },
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }

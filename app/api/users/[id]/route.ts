@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function GET(
   req: Request,
@@ -22,17 +24,13 @@ export async function GET(
         { status: 404 },
       );
     }
-  } catch (error: any) {
+  } catch (error) {
     return Response.json(
-      {
-        user: {},
-        message: "Unable to fetch user",
-        success: false,
-        error,
-        errrorRes: error.response,
-      },
+      { user: {}, message: "Unable to fetch user", success: false },
       { status: 500 },
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
@@ -62,5 +60,7 @@ export async function PATCH(
     return Response.json("User Updated", { status: 200 });
   } catch (error) {
     return Response.json("Unable to update user", { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
 }
