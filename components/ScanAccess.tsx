@@ -2,20 +2,22 @@
 
 import { Button } from "@nextui-org/button";
 import React, { useState } from "react";
-
-import useLocalStorage from "./useLocalStorage";
+import { parseCookies, setCookie } from "nookies";
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const ScanAccess = () => {
   const [loading, setLoading] = useState(false);
-  const [value, setValue] = useLocalStorage("scan-access", "");
+  const cookies = parseCookies();
 
   const handleClick = async () => {
     try {
       setLoading(true);
       await wait(1500);
-      setValue("#oasisoflove24");
+      setCookie(null, "scan-access", "84566acf-73af-4fad-b38d-929d412d2f55", {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      });
     } catch (error) {
       return error;
     } finally {
@@ -26,12 +28,12 @@ const ScanAccess = () => {
   return (
     <Button
       color="primary"
-      disabled={!!value}
+      disabled={!!cookies["scan-access"]}
       isLoading={loading}
       variant="shadow"
       onClick={handleClick}
     >
-      {value ? "Access Granted" : "Grant Scan Access"}
+      {cookies["scan-access"] ? "Access Granted" : "Grant Scan Access"}
     </Button>
   );
 };

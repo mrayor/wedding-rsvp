@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -8,20 +8,43 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
+import { useRouter } from "next/navigation";
+import { parseCookies } from "nookies";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
   state: "approve" | "reject";
+  id: string;
 }
 
-export default function ConfirmationModal({ isOpen, onClose, state }: IProps) {
+export default function ConfirmationModal({
+  isOpen,
+  onClose,
+  state,
+  id,
+}: IProps) {
+  const cookies = parseCookies();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const onConfirm = async () => {
     try {
-      console.log("Confirmed", state);
+      if (!cookies["scan-access"]) return;
+
+      setLoading(true);
+      await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          status: state === "approve" ? "active" : "denied",
+        }),
+      });
+
       onClose();
+      router.refresh();
     } catch (error) {
       return error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,6 +65,7 @@ export default function ConfirmationModal({ isOpen, onClose, state }: IProps) {
               </Button>
               <Button
                 color={state === "reject" ? "danger" : "primary"}
+                isLoading={loading}
                 onPress={onConfirm}
               >
                 {state === "approve" ? "Approve" : "Reject"}

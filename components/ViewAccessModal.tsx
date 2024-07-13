@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -9,6 +9,8 @@ import {
 import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import { Divider } from "@nextui-org/divider";
+import { User } from "@prisma/client";
+import { Skeleton } from "@nextui-org/skeleton";
 
 interface IProps {
   id: string;
@@ -16,8 +18,40 @@ interface IProps {
   onClose: () => void;
 }
 
+export const getUser = async (id: string) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users/${id}`, {
+      method: "GET",
+    });
+
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+
+    return error;
+  }
+};
+
 export default function ViewAccessModal({ id, isOpen, onClose }: IProps) {
-  console.log(id);
+  const [user, setUser] = React.useState<User | null>(null);
+  const [loading, setLoading] = React.useState(false);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        setLoading(true);
+        const { user } = await getUser(id);
+
+        setUser(user);
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetch();
+  }, [id]);
 
   return (
     <Modal backdrop="blur" isOpen={isOpen} size="md" onClose={onClose}>
@@ -50,11 +84,23 @@ export default function ViewAccessModal({ id, isOpen, onClose }: IProps) {
                 <div className="flex justify-between space-x-4">
                   <div className="flex flex-col">
                     <p className="font-medium text-sm">Guest Name</p>
-                    <p className="text-base font-bold">John Doe</p>
+                    {loading ? (
+                      <div className="mt-1">
+                        <Skeleton className="h-3.5 w-full rounded-lg" />
+                      </div>
+                    ) : (
+                      <p className="text-base font-bold">{user?.name}</p>
+                    )}
                   </div>
                   <div className="flex flex-col">
                     <p className="font-medium text-sm">Table Number</p>
-                    <p className="text-base font-bold">54</p>
+                    {loading ? (
+                      <div className="mt-1">
+                        <Skeleton className="h-3.5 w-full rounded-lg" />
+                      </div>
+                    ) : (
+                      <p className="text-base font-bold">{user?.tableNumber}</p>
+                    )}
                   </div>
                 </div>
                 <div>
