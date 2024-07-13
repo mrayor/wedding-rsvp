@@ -4,10 +4,11 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build && prisma generate",
+		"build": "next build",
 		"start": "next start",
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
-		"seed": "node prisma/seed.js"
+		"seed": "node prisma/seed.js",
+		"postinstall": "prisma generate"
 	},
 	"dependencies": {
 		"@nextui-org/button": "^2.0.31",
