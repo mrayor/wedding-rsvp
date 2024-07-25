@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    await prisma.$connect();
     const users = await prisma.user.findMany();
 
     return Response.json(
@@ -17,6 +16,6 @@ export async function GET() {
       { status: 500 },
     );
   } finally {
-    // await prisma.$disconnect();
+    await prisma.$disconnect();
   }
 }

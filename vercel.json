@@ -1,0 +1,12 @@
+{
+    "build": {
+        "env": {
+            "DATABASE_URL": "file:/tmp/database.db"
+        }
+    },
+    "functions": {
+        "api/*.ts": {
+            "includeFiles": "database.db"
+        }
+    }
+}

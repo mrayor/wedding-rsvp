@@ -30,7 +30,7 @@ export async function GET(
       { status: 500 },
     );
   } finally {
-    // await prisma.$disconnect();
+    await prisma.$disconnect();
   }
 }
 
@@ -67,6 +67,6 @@ export async function PATCH(
       { status: 500 },
     );
   } finally {
-    // await prisma.$disconnect();
+    await prisma.$disconnect();
   }
 }
