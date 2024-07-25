@@ -6,6 +6,8 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } },
 ) {
+  await prisma.$connect();
+
   const { id } = params;
 
   try {
@@ -38,6 +40,8 @@ export async function PATCH(
   req: Request,
   { params }: { params: { id: string } },
 ) {
+  await prisma.$connect();
+
   const body = await req.json();
   const { id } = params;
 
