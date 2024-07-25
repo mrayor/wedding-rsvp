@@ -6,8 +6,6 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  await prisma.$connect();
-
   const { id } = params;
 
   try {
@@ -32,7 +30,7 @@ export async function GET(
       { status: 500 },
     );
   } finally {
-    await prisma.$disconnect();
+    // await prisma.$disconnect();
   }
 }
 
@@ -40,8 +38,6 @@ export async function PATCH(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  await prisma.$connect();
-
   const body = await req.json();
   const { id } = params;
 
@@ -71,6 +67,6 @@ export async function PATCH(
       { status: 500 },
     );
   } finally {
-    await prisma.$disconnect();
+    // await prisma.$disconnect();
   }
 }
