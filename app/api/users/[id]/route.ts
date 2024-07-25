@@ -26,7 +26,7 @@ export async function GET(
     }
   } catch (error) {
     return Response.json(
-      { user: {}, message: "Unable to fetch user", success: false },
+      { user: {}, message: "Unable to fetch user", success: false, error },
       { status: 500 },
     );
   } finally {
@@ -49,7 +49,10 @@ export async function PATCH(
     }
 
     if (body.status === "active" && user.status !== "pending") {
-      return Response.json("User already scanned access code", { status: 403 });
+      return Response.json(
+        { message: "User already scanned access code" },
+        { status: 403 },
+      );
     }
 
     await prisma.user.update({
@@ -59,7 +62,10 @@ export async function PATCH(
 
     return Response.json("User Updated", { status: 200 });
   } catch (error) {
-    return Response.json("Unable to update user", { status: 500 });
+    return Response.json(
+      { message: "Unable to update user", error },
+      { status: 500 },
+    );
   } finally {
     await prisma.$disconnect();
   }
