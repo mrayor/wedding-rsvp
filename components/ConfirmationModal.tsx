@@ -11,6 +11,8 @@ import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import { parseCookies } from "nookies";
 
+import revalidate from "@/app/actions";
+
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
@@ -38,9 +40,8 @@ export default function ConfirmationModal({
           status: state === "approve" ? "active" : "denied",
         }),
       });
-
+      revalidate();
       onClose();
-      router.refresh();
     } catch (error) {
       return error;
     } finally {

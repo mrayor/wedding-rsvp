@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
+import revalidate from "@/app/actions";
+
 const index = async ({ params: { id } }: { params: { id: string } }) => {
   const scanAccess = cookies().get("scan-access");
 
@@ -21,6 +23,8 @@ const index = async ({ params: { id } }: { params: { id: string } }) => {
   );
 
   if (response.status === 200) {
+    revalidate();
+
     return redirect(process.env.NEXT_PUBLIC_URL || "");
   }
 
