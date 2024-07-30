@@ -7,6 +7,8 @@ import Home from "../components/Home";
 import ScanAccess from "@/components/ScanAccess";
 import { getUsers } from "@/components/utils";
 
+export const fetchCache = "force-no-store";
+
 export default async function index() {
   const scanAccess = cookies().get("scan-access");
 

@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export const fetchCache = "force-no-store";
+
 export async function GET() {
   try {
     const users = await prisma.user.findMany();
