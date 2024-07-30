@@ -1,11 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 
+import revalidate from "@/app/actions";
+
 const prisma = new PrismaClient();
 
 export const fetchCache = "force-no-store";
 
 export async function GET() {
   try {
+    revalidate();
+
     const users = await prisma.user.findMany();
 
     return Response.json(
