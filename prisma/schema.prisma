@@ -19,6 +19,7 @@ model User {
   name        String
   status      String?  @default("pending")
   tableNumber String
+  relation    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

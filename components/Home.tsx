@@ -39,7 +39,13 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   pending: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "tableNumber", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = [
+  "name",
+  "tableNumber",
+  "relation",
+  "status",
+  "actions",
+];
 
 interface IProps {
   users: User[];
@@ -130,6 +136,7 @@ export default function Home(props: IProps) {
         return (
           <div>
             <p>{user.name}</p>
+            <p className="text-xs text-gray-500">{user.relation}</p>
           </div>
         );
       case "tableNumber":
