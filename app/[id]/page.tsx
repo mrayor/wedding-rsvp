@@ -177,7 +177,7 @@ export default function ViewAccessModal({
           className="px-0 gap-0 z-50 min-w-9 h-9 rounded-full text-foreground-500 data-[hover=true]:bg-default/40 bg-default/60"
           color="default"
           variant="light"
-          onPress={() => downloadCard("Adenugba Favour")}
+          onPress={() => downloadCard(user?.name ?? "Adenugba Favour")}
         >
           <svg
             fill="none"
