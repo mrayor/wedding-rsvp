@@ -54,3 +54,4 @@ Licensed under the [MIT license](https://github.com/nextui-org/next-app-template
 
 New changes added by the script.This is an automated change.This is an automated change.This is an automated change.This is an automated change.This is an automated change.This is an automated change.This is an automated change.This is an automated change.This is an automated change.This is an automated change.
 Hi from Venue.sh 😊
+Hi from Venue.sh 😊
