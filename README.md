@@ -52,4 +52,4 @@ After modifying the `.npmrc` file, you need to run `pnpm install` again to ensur
 
 Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
 
-New changes added by the script.
+New changes added by the script.This is an automated change.
